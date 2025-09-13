@@ -2,9 +2,7 @@
 
 > ⚠️ **Note:** This project uses the Open Library API. Sometimes, the first request may take a few seconds depending on API response time. Subsequent requests are faster. 🚀
 
-<div align="center">
-
-![ReadQuest Banner](https://img.shields.io/badge/ReadQuest-Book-Finder-orange?style=for-the-badge)
+<div align="start">
 
 **ReadQuest** is a full-stack book discovery application that allows users to search, explore, and view detailed information about books, including authors, subjects, and descriptions, with a responsive and modern interface.
 
