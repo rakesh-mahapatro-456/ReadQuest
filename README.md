@@ -1,5 +1,3 @@
-Absolutely! Here's a full, polished README for **ReadQuest**, following the style you showed me, including tech badges, screenshots, and the tagline inside a badge:
-
 # ReadQuest 📚
 
 > ⚠️ **Note:** This project uses the Open Library API. Sometimes, the first request may take a few seconds depending on API response time. Subsequent requests are faster. 🚀
