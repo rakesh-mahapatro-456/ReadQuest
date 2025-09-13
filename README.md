@@ -4,8 +4,10 @@
 
 <div align="center">
 
-![ReadQuest](https://img.shields.io/badge/ReadQuest-📚-orange?style=for-the-badge&logo=book)
-![Tagline](https://img.shields.io/badge/Embark%20on%20your%20next%20great%20reading%20adventure-✨-yellow?style=for-the-badge)
+![ReadQuest Banner](https://img.shields.io/badge/ReadQuest-Book-Finder-orange?style=for-the-badge)
+
+**ReadQuest** is a full-stack book discovery application that allows users to search, explore, and view detailed information about books, including authors, subjects, and descriptions, with a responsive and modern interface.
+
 
 
 
