@@ -6,7 +6,8 @@
 
 ![ReadQuest Banner](https://img.shields.io/badge/ReadQuest-Book-Finder-orange?style=for-the-badge)
 
-**<span style="background-color:#FFA500;color:white;padding:0.2em 0.6em;border-radius:6px;">Embark on your next great reading adventure</span>**
+![Embark on your next great reading adventure](https://img.shields.io/badge/Embark%20on%20your%20next%20great%20reading%20adventure-orange?style=for-the-badge)
+
 
 🌐 **[Live Demo](https://read-quest.vercel.app/)**
 
