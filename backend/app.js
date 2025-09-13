@@ -1,9 +1,10 @@
 import express from "express";
 import axios from "axios";
 import cors from "cors";
+import 'dotenv/config';
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
@@ -59,5 +60,5 @@ app.get("/api/books/:workId", async (req, res) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`✅ Server running on http://localhost:${PORT}`)
+  console.log(`✅ Server running on port ${PORT}`)
 );
