@@ -1,147 +1,177 @@
-# ReadQuest 📚
-
-> ⚠️ **Note:** This project uses the Open Library API. Sometimes, the first request may take a few seconds depending on API response time. Subsequent requests are faster. 🚀
-
-<div align="start">
-
-**ReadQuest** is a full-stack book discovery application that allows users to search, explore, and view detailed information about books, including authors, subjects, and descriptions, with a responsive and modern interface.
-
-
-
-
-🌐 **[Live Demo](https://read-quest.vercel.app/)**
-
-</div>
-
----
-
-## ✨ Features
-
-### ✅ Book Search
-
-* Search for books by **title, author, or subject**
-* View **real-time search results** with caching
-* Maintain **search history** for quick access
-
-### ✅ Book Details
-
-* Detailed book information including:
-  * Title, author(s), publish date
-  * Number of pages
-  * Description
-  * Subjects & topics
-* Direct link to **Open Library** page
-
-### ✅ User Experience
-
-* Dark/light theme toggle
-* Responsive UI for desktop and mobile
-* Smooth animations and modern design with **shadcn/ui** and **Tailwind CSS**
-
----
-
-## 🛠️ Tech Stack
-
 <div align="center">
 
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Shadcn/UI](https://img.shields.io/badge/Shadcn-UI-blue?style=for-the-badge)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+```
+██████╗ ███████╗ █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗███████╗████████╗
+██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔═══██╗██║   ██║██╔════╝██╔════╝╚══██╔══╝
+██████╔╝█████╗  ███████║██║  ██║██║   ██║██║   ██║█████╗  ███████╗   ██║
+██╔══██╗██╔══╝  ██╔══██║██║  ██║██║▄▄ ██║██║   ██║██╔══╝  ╚════██║   ██║
+██║  ██║███████╗██║  ██║██████╔╝╚██████╔╝╚██████╔╝███████╗███████║   ██║
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚══▀▀═╝  ╚═════╝ ╚══════╝╚══════╝   ╚═╝
+```
+
+**Book discovery app — Express proxy, Redux caching, Open Library API**
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Redux](https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
+🌐 **[Live Demo](https://read-quest.vercel.app)**
+
+> ⚠️ Backend on Render free tier — first request after inactivity may take 30–60 seconds.
 
 </div>
 
-### **Frontend**
+---
 
-* React with **Vite** for fast, optimized development
-* **Redux Toolkit** for state management
-* **Tailwind CSS** and **shadcn/ui** for components and styling
-* Responsive and accessible design
-* Theme toggle (dark/light mode)
+## `$ cat overview.txt`
 
-### **Backend**
+ReadQuest is a book discovery app with an **Express proxy backend** that handles CORS and forwards requests to the Open Library API. Search results are cached in Redux to avoid redundant API calls. Search history and theme preference are persisted in localStorage.
 
-* **Open Library API** for fetching book data
-* Axios for HTTP requests
+```
+  Frontend (React + Vite)
+         │
+         ▼  VITE_BASE_URL
+  Express Backend (proxy) — Render
+  ├── GET /api/search          →  proxy → Open Library /search.json
+  └── GET /api/books/:workId   →  proxy → Open Library /works/:workId.json
+         │
+         ▼
+  Open Library API
+```
 
-### **Deployment**
-
-* Frontend deployed on **Vercel**
-* No backend required (API-based)
+```
+  User search → Redux store check (bookSlice)
+                       │
+               ┌───────┴────────┐
+           cached             not cached
+               │                    │
+         return instantly      GET /api/search
+                                     │
+                              store in Redux
+                              update localStorage (lastBooks, lastQuery)
+                              render results
+```
 
 ---
 
-## 📸 Screenshots
+## `$ cat features.txt`
 
-### Home Page
+### 🔍 Book Search
+- Search by title, author, or subject via `/api/search`
+- Results cached in Redux — repeated searches return instantly
+- Search history persisted in localStorage (`lastQuery`, `lastBooks`)
 
+### 📖 Book Details
+- Fetch via `/api/books/:workId`
+- Title, author(s), publish date, page count, description, subjects
+- Direct link to Open Library page
+
+### 🎨 UI
+- Dark/light theme toggle with localStorage persistence
+- Responsive for desktop and mobile
+- shadcn/ui components + Tailwind CSS
+
+---
+
+## `$ cat stack.txt`
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  BACKEND                                                        │
+│  Node.js · Express    →  proxy server + CORS handling          │
+│  Open Library API     →  book data source                      │
+│  Axios                →  HTTP requests to Open Library         │
+│                                                                 │
+│  FRONTEND                                                       │
+│  React + Vite         →  fast dev build                        │
+│  Redux Toolkit        →  search cache + state (bookSlice)      │
+│  Tailwind CSS         →  styling                               │
+│  shadcn/ui            →  accessible component library          │
+│  Axios (instance)     →  requests via VITE_BASE_URL            │
+│                                                                 │
+│  PERSISTENCE                                                    │
+│  localStorage         →  lastBooks, lastQuery, theme pref      │
+│                                                                 │
+│  DEPLOYMENT                                                     │
+│  Frontend  →  Vercel                                           │
+│  Backend   →  Render                                           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## `$ ls -la screenshots/`
+
+### Home
 ![Home](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772688/Screenshot_2025-09-13_at_19.38.14_vlubik.png)
 
-### Book Results
+### Search Results
+![Results](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772698/Screenshot_2025-09-13_at_19.38.31_pxvymt.png)
 
-![Book Results](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772698/Screenshot_2025-09-13_at_19.38.31_pxvymt.png)
-
-![Book Results 2](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772690/Screenshot_2025-09-13_at_19.38.44_c7vfht.png)
-
-### Book Details
-
-![Book Detail](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772690/Screenshot_2025-09-13_at_19.39.16_gmo0z2.png)
+### Book Detail
+![Detail](https://res.cloudinary.com/dqz5xgr5v/image/upload/v1757772690/Screenshot_2025-09-13_at_19.39.16_gmo0z2.png)
 
 ---
 
-## 🚀 Getting Started
+## `$ cat setup.txt`
 
-### **Prerequisites**
+### Prerequisites
+```
+Node.js v14+
+npm or yarn
+```
 
-* Node.js (v14+)
-* npm or yarn
-
-### **Setup**
-
+### Clone
 ```bash
-# Clone repo
 git clone https://github.com/rakesh-mahapatro-456/ReadQuest.git
 cd ReadQuest
+```
 
-# Install dependencies
-npm install
+### Backend
+```bash
+cd backend && npm install
+```
 
-# Create .env file
-# VITE_BASE_URL should point to Open Library API base (optional)
-VITE_BASE_URL=https://openlibrary.org
+Create `.env`:
+```env
+PORT=8000
+FRONTEND_URL=http://localhost:5173
+```
 
-# Start frontend
+```bash
 npm run dev
-````
+# Proxy running at http://localhost:8000
+```
 
-Open `http://localhost:5173` in your browser.
+### Frontend
+```bash
+cd frontend && npm install
+```
 
----
+Create `.env`:
+```env
+VITE_BASE_URL=http://localhost:8000
+```
 
-## 🔒 Security Highlights
-
-* No sensitive data stored
-* Requests go directly to Open Library API
-
----
-
-## ✅ Key Learnings
-
-* Integrating external APIs (Open Library)
-* Managing state with **Redux Toolkit**
-* Building responsive UI with **Tailwind CSS** and **shadcn/ui**
-* Deploying on **Vercel** with environment variables
-* Theme toggling and local storage caching
+```bash
+npm run dev
+# App at http://localhost:5173
+```
 
 ---
 
 <div align="center">
 
-**Built with ❤️ using React, Redux, TailwindCSS, and Vite**
+```
+$ echo $BUILT_WITH
+  React · Redux · Express · Tailwind CSS · Vite
+  Built with ❤️
+```
 
 </div>
-
----
-
